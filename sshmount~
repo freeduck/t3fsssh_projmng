@@ -1,0 +1,6 @@
+sshfs -oworkaround=rename,follow_symlinks faraday:/home/smk-k /home/kristian/mount/faraday/smk.dk
+sshfs -oworkaround=rename,follow_symlinks www-data@faraday:/home/topdanmark /home/kristian/mount/faraday/topdanmark
+sshfs -oworkaround=rename,follow_symlinks faraday:org /home/kristian/org
+sshfs -oworkaround=rename,follow_symlinks www-data@faraday:/home/primanew /home/kristian/mount/primagaz.dk
+sshfs -oworkaround=rename,follow_symlinks www-data@faraday:/home/toptoy /home/kristian/mount/toptoy.dk
+
