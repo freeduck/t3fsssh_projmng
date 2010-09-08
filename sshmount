@@ -11,4 +11,7 @@ sshfs -oworkaround=rename,follow_symlinks faraday:/home/venstre-k /home/kristian
 
 sshfs -oworkaround=rename,follow_symlinks faraday:/home/energitilsynet-k /home/kristian/mount/faraday/energitilsynet/
 sshfs -oworkaround=rename,follow_symlinks,uid=1000 www-data@faraday:/home/dummy /home/kristian/mount/faraday/dummy
-sshfs -oworkaround=rename,follow_symlinks,uid=1000 www-data@faraday:/home/vdk /home/kristian/mount/faraday/vdk
+sshfs -oworkaround=rename,follow_symlinks,uid=1000 faraday:/home/vdk-knj /home/kristian/mount/faraday/vdk
+
+sshfs -oworkaround=rename,follow_symlinks,uid=1000 faraday:/home /home/kristian/mount/faraday/home_as_me
+sshfs -oworkaround=rename,follow_symlinks,uid=1000 www-data@faraday:/home /home/kristian/mount/faraday/home_as_wd
