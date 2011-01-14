@@ -1,0 +1,6 @@
+#!/usr/bin/php
+<?php
+$siteLink = '/home/kristian/sites/'.$argv[1];
+if(is_link($siteLink)){
+	echo readlink($siteLink);
+}

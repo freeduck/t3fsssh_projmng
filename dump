@@ -1,13 +1,16 @@
-project=applus
+project=smk
 home=/home/kristian
 target_host=faraday
+destination=/home/kristian/sites
 script=/home/kristian/bin/get_db_inf.php
+
 ssh $target_host cd /home\;tar czf $home/$project.tar.gz $project
 scp $target_host:$home/$project.tar.gz /tmp
 dbdef="connection=$(ssh faraday php $script /home/$project/htdocs/typo3conf/localconf.php)"
 eval $dbdef
-ssh $target_host mysqldump -h${connection[0]} -u${connection[1]} -p${connection[2]} ${connection[3]} \> /home/kristian/${connection[3]}.sql
+ssh $target_host mysqldump -h${connection[0]} -u${connection[1]} -p${connection[2]} ${connection[3]} \> $home/${connection[3]}.sql
 scp $target_host:${connection[3]}.sql /tmp/
 mysql -uroot -pstaalanden -e 'CREATE DATABASE '${connection[3]}' CHARACTER SET utf8;'
 mysql -uroot -pstaalanden -e 'GRANT ALL ON '${connection[3]}'.* TO '${connection[1]}'@localhost IDENTIFIED BY "'${connection[2]}'";'
-mysql -uroot -pstaalanden cpr < /tmp/${connection[3]}.sql
+mysql -uroot -pstaalanden ${connection[3]} < /tmp/${connection[3]}.sql
+tar xzf /tmp/$project.tar.gz -C $destination
