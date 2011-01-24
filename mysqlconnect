@@ -12,6 +12,8 @@ do
 done
 ssh -NfL $tunnelPort:localhost:3306 www-data@$mountHost
 mysql -u${connection[1]} -p${connection[2]} -P$tunnelPort --protocol=TCP -hlocalhost ${connection[3]}
+tunnelProcessId=$(pgrep -f $tunnelPort.+$mountHost)
+kill -9 $tunnelProcessId
 
 
 
