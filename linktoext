@@ -1,0 +1,29 @@
+#!/usr/bin/php
+<?php
+$sitesDir = '/home/kristian/sites';
+$projectsDir = '/home/kristian/projects';
+if(!isset($argv[1])){
+	throw new Exception('You must specify a site to link from');
+}
+$site = $argv[1];
+$siteDir = $sitesDir.DIRECTORY_SEPARATOR.$site;
+$projectDir = $projectsDir.DIRECTORY_SEPARATOR.$site;
+if(!is_link($siteDir)){
+	throw new Exception("The specified site:'".$site."' does not apear to exist in ".$sitesDir);
+}
+
+if(!is_dir($projectDir)){
+	throw new Exception("The specified project:'".$site."' does not apear to exist in ".$projectsDir);
+}
+
+if(!isset($argv[2])){
+	throw new Exception('You must specify an extension to link to');
+}
+$extensionName = $argv[2];
+$extensionsDir = $siteDir.DIRECTORY_SEPARATOR.'typo3conf'.DIRECTORY_SEPARATOR.'ext';
+$extensionDir = $extensionsDir.DIRECTORY_SEPARATOR.$extensionName;
+if(!is_dir($extensionDir)){
+	throw new Exception('The extension : "'.$extensionName.'" does not apear to exist in '.$extensionsDir);
+}
+
+symlink($extensionDir.DIRECTORY_SEPARATOR, $projectDir.DIRECTORY_SEPARATOR.$extensionName);

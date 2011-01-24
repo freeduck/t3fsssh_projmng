@@ -1,0 +1,28 @@
+#!/usr/bin/php
+<?php
+$TYPO3_CONF_VARS = array();
+
+$typo_db_username = 'xxx';	//  Modified or inserted by TYPO3 Install Tool.
+$typo_db_password = 'xxx';	//  Modified or inserted by TYPO3 Install Tool.
+$typo_db_host = 'xxx';	//  Modified or inserted by TYPO3 Install Tool.
+$typo_db = 'xxx';
+
+if(!isset($argv[1])){
+	throw new Exception('You need to specify a site');
+}
+$site = $argv[1];
+$sitesRoot = '/home/kristian'.DIRECTORY_SEPARATOR.'sites';
+$siteDir = $sitesRoot.DIRECTORY_SEPARATOR.$site;
+if(!is_link($siteDir)){
+	throw new Exception('The specified site "'.$site.'" does not exist in: '.$sitesRoot);
+}
+
+set_error_handler('myErrorHandler');
+$localconfPath =  $siteDir.DIRECTORY_SEPARATOR.'typo3conf'.DIRECTORY_SEPARATOR.'localconf.php';
+var_dump($localconfPath);
+include $localconfPath;
+restore_error_handler();
+echo "($typo_db_host $typo_db_username $typo_db_password $typo_db)";
+
+function myErrorHandler($errno, $errstr, $errfile, $errline){
+}
