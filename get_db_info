@@ -19,7 +19,6 @@ if(!is_link($siteDir)){
 
 set_error_handler('myErrorHandler');
 $localconfPath =  $siteDir.DIRECTORY_SEPARATOR.'typo3conf'.DIRECTORY_SEPARATOR.'localconf.php';
-var_dump($localconfPath);
 include $localconfPath;
 restore_error_handler();
 echo "($typo_db_host $typo_db_username $typo_db_password $typo_db)";

@@ -1,0 +1,27 @@
+#!/bin/bash
+dbdef="connection=$(get_db_info $1)"
+eval $dbdef
+siteMount=$(ls -l /home/kristian/sites/$1|awk '{print $10}')
+mountHost=$(basename $(dirname $(dirname $(dirname $siteMount))))
+tunnelPort=6606
+tunnelPortIsUsed=$(lsof -i :$tunnelPort)
+while [ -n "$tunnelPortIsUsed" ]
+do
+	tunnelPort=$(( $tunnelPort + 1 ))
+	tunnelPortIsUsed=$(lsof -i :$tunnelPort)
+done
+ssh -NfL $tunnelPort:localhost:3306 www-data@$mountHost
+mysql -u${connection[1]} -p${connection[2]} -P$tunnelPort --protocol=TCP -hlocalhost ${connection[3]}
+
+
+
+#tunnelProcessId=$(pgrep -f $tunnelPort.+$mountHost)
+
+#if [ -z "$tunnelProcessId" ]
+#then
+#	ssh -NfL $tunnelPort:localhost:3306 www-data@$mountHost
+#else
+#	echo "An existing tunnel already exists"
+#fi
+
+
